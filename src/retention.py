@@ -52,9 +52,9 @@ class RetentionPolicy:
         weekly_cutoff = now - timedelta(weeks=self.keep_weekly)
         monthly_cutoff = now - timedelta(days=self.keep_monthly * 30)
 
-        # seen_days = set()
-        # seen_weeks = set()
-        # seen_months = set()
+        seen_days = set()
+        seen_weeks = set()
+        seen_months = set()
 
         for ts, snap in remaining:
             day_key = ts.strftime("%Y%m%d")
