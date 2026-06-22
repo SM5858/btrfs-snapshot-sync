@@ -31,7 +31,6 @@ if [[ -n "$AUTHORIZED_KEY" ]]; then
 fi
 
 SUDOERS_LINE="$BACKUP_USER ALL=(root) NOPASSWD: /usr/bin/btrfs receive $BACKUP_DIR, /usr/bin/btrfs subvolume delete $BACKUP_DIR/*, /usr/bin/btrfs subvolume list *"
-echo "$SUDOERS_LINE" > "/etc/sudoers.d/btrfs-snapshot-sync"
 chmod 440 "/etc/sudoers.d/btrfs-snapshot-sync"
 
 echo ""
