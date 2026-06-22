@@ -1,0 +1,26 @@
+{
+  "source_subvolume": "/",
+  "snapshot_dir": "/mnt/snapshots",
+  "snapshot_prefix": "backup",
+  "retention": {
+    "keep_hourly": 24,
+    "keep_daily": 7,
+    "keep_weekly": 4,
+    "keep_monthly": 3
+  },
+  "transfer": {
+    "compress": true,
+    "enabled": true
+  },
+  "remote": {
+    "host": "backup-server.example.com",
+    "user": "backup",
+    "port": 22,
+    "backup_dir": "/mnt/remote-backups",
+    "ssh_key": "/root/.ssh/backup_id_ed25519"
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "/var/log/btrfs-snapshot-sync.log"
+  }
+}
