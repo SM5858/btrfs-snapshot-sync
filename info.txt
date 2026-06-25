@@ -1,0 +1,1 @@
+# Please use test cases. It determines if your devices can communicate with each other using this system.
