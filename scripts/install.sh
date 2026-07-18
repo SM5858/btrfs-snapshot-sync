@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
 INSTALL_DIR="/opt/btrfs-snapshot-sync"
 BIN_LINK="/usr/local/bin/btrfs-snapshot-sync"
 CONFIG_DIR="/etc/btrfs-snapshot-sync"
@@ -13,20 +15,23 @@ fi
 
 echo "Installing btrfs-snapshot-sync..."
 
-cp -r . "$INSTALL_DIR"
-chmod +x "$INSTALL_DIR/btrfs_backup.py"
+# Copy only the files needed at runtime. Copying the whole working tree would
+# drag .git, tests and __pycache__ into /opt.
+mkdir -p "$INSTALL_DIR/src"
+install -m 0755 "$REPO_ROOT/btrfs_backup.py" "$INSTALL_DIR/btrfs_backup.py"
+install -m 0644 "$REPO_ROOT"/src/*.py "$INSTALL_DIR/src/"
 
 ln -sf "$INSTALL_DIR/btrfs_backup.py" "$BIN_LINK"
 
 mkdir -p "$CONFIG_DIR"
 if [[ ! -f "$CONFIG_DIR/config.json" ]]; then
-    cp config/config.json "$CONFIG_DIR/config.json"
+    install -m 0640 "$REPO_ROOT/config/config.json" "$CONFIG_DIR/config.json"
     echo "Default config written to $CONFIG_DIR/config.json"
     echo "Edit it before enabling the timer."
 fi
 
-cp systemd/btrfs-snapshot-sync.service "$SYSTEMD_DIR/"
-cp systemd/btrfs-snapshot-sync.timer "$SYSTEMD_DIR/"
+install -m 0644 "$REPO_ROOT/systemd/btrfs-snapshot-sync.service" "$SYSTEMD_DIR/"
+install -m 0644 "$REPO_ROOT/systemd/btrfs-snapshot-sync.timer" "$SYSTEMD_DIR/"
 
 systemctl daemon-reload
 

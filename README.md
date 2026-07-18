@@ -21,10 +21,14 @@ If the main machine is lost, you can restore from the latest snapshot on the bac
 ## Installation
 
 ```bash
-git clone https://github.com/yourname/btrfs-snapshot-sync
+git clone https://github.com/onxxdatas/btrfs-snapshot-sync
 cd btrfs-snapshot-sync
 sudo bash scripts/install.sh
 ```
+
+The installer copies only the runtime files (`btrfs_backup.py` and `src/`) to
+`/opt/btrfs-snapshot-sync` — the repository itself, tests and `.git` are not
+installed. If you forked the project, clone your own fork instead.
 
 On the **backup server**, run:
 
